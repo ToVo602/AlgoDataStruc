@@ -16,7 +16,7 @@ public class IntegerFileGenerator {
     public void generateFile(){
         Out out = new Out(this.filePath);
         for (int i = 0; i < this.evenNumberOfIntegersWrittenToFile; i++) {
-            int randomInt = (int) (Math.random() * this.maximumInt) + 1;
+            int randomInt = (int) (Math.random() * (this.maximumInt + 1));
             out.println(randomInt);
         }
     }

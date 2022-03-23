@@ -1,30 +1,32 @@
 public class TestClientWeightedQU {
     public static void main(String[] args) {
+        //Initialisation of data structure
         int N = 10000;
         WeightedQU weightedQU = new WeightedQU(N);
 
-        int evenNumberOfIntegersToGenerate = N; //this number has to be even or an IllegalArgumentException will be thrown
+        //N * 2 randomly generated numbers from 0 to N-1 for p[] and q[] each with N elements written to a txt-file
+        int numberOfIntegersToGenerate = N * 2;
         int maximumValue = N - 1;
         String file = "integers.txt";
-
-        IntegerFileGenerator intFile = new IntegerFileGenerator(evenNumberOfIntegersToGenerate, maximumValue, file);
+        IntegerFileGenerator intFile = new IntegerFileGenerator(numberOfIntegersToGenerate, maximumValue, file);
         intFile.generateFile();
 
-        int[] integersFromFile = new int[evenNumberOfIntegersToGenerate];
+        //reading in the file with integers into an array
+        int[] integersFromFile = new int[numberOfIntegersToGenerate];
         In in = new In(file);
-
-        for (int i = 0; i < evenNumberOfIntegersToGenerate; i++) {
+        for (int i = 0; i < numberOfIntegersToGenerate; i++) {
             integersFromFile[i] = in.readInt();
         }
 
-        int[] p = new int[evenNumberOfIntegersToGenerate / 2];
-        int[] q = new int[evenNumberOfIntegersToGenerate / 2];
-
-        for (int i = 0; i < evenNumberOfIntegersToGenerate / 2; i++) {
-            p[i] = integersFromFile[1];
+        //Initialisation of p[] and q[] and filling them with read in integers from array
+        int[] p = new int[N];
+        int[] q = new int[N];
+        for (int i = 0; i < N; i++) {
+            p[i] = integersFromFile[i];
             q[i] = integersFromFile[(integersFromFile.length - 1) - i];
         }
 
+        //Using the Weighted Quick Union
         for (int i = 0; i < p.length; i++) {
             if(weightedQU.connected(p[i], q[i])){
                 StdOut.println("Already connected: " + p[i] + " and " + q[i]);
@@ -33,10 +35,5 @@ public class TestClientWeightedQU {
                 StdOut.println("Now " + p[i] + " and " + q[i] + " are connected.");
             }
         }
-
-
-
-
-
     }
 }
